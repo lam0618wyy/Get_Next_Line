@@ -6,7 +6,7 @@
 /*   By: kalam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 20:04:59 by kalam             #+#    #+#             */
-/*   Updated: 2023/12/13 18:12:29 by kalam            ###   ########.fr       */
+/*   Updated: 2023/12/13 18:52:43 by kalam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,22 @@
 
 int		found_newline(t_list *list)
 {
+	int		i;
+
+	if (NULL == list)
+		return (0);
+	while (list)
+	{
+		i = 0;
+		while (list->str_buf[i] && i < BUFFER_SIZE)
+		{
+			if (list->str_buf[i] == '\n')
+					return (1);
+			i++;
+		}
+		list = list->next;
+	}
+	return (0);
 }
 
 t_list	*find_last_node(t_list *list)
