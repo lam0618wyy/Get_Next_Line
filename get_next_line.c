@@ -6,7 +6,7 @@
 /*   By: kalam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:26:23 by kalam             #+#    #+#             */
-/*   Updated: 2023/12/13 17:50:49 by kalam            ###   ########.fr       */
+/*   Updated: 2023/12/15 19:30:55 by kalam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	polish_list(t_list **list)
 	while (last_node->str_buf[i] && last_node->str_buf[i] != '\n')
 		i++;
 	while (last_node->str_buf[i] && last_node->str_buf[++i])
-		buf[k++] = last->str_buf[i];
+		buf[k++] = last_node->str_buf[i];
 	buf[k] = '\0';
 	clean_node->str_buf = buf;
 	clean_node->next = NULL;
@@ -104,8 +104,11 @@ char	*get_next_line(int fd)
 	static t_list	*list = NULL;
 	char			*next_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
+		dealloc(&list, NULL, NULL);
 		return (NULL);
+	}
 	create_list(&list, fd);
 	if (list == NULL)
 		return (NULL);
@@ -113,3 +116,12 @@ char	*get_next_line(int fd)
 	polish_list(&list);
 	return (next_line);
 }
+/*
+int	main(void)
+{
+	int	fd0 = open("out_gnl_1.txt", O_RDONLY);
+	char *s;
+
+	s = get_next_line(fd0);
+	printf("out_gnl_1.txt:>>> \"%s\"\n", s);
+}*/
